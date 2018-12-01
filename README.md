@@ -18,3 +18,32 @@ This repo contains simplified and trimmed down version of tensorflow's example i
 The `scripts` directory contains helpers for the codelab. Some of these come from the main TensorFlow repository, and are included here so you can use them without also downloading the main TensorFlow repo (they are not part of the TensorFlow `pip` installation).
 
 # Vehicle-Detection-Using-Tensorflow-Android-Implemenation
+
+pip install upgrade tensorflow 
+
+Clone the repository
+
+Now download the data set from the following link
+
+Extract the Vehicle section where you see different vehicle category
+
+Put these files into tf_files
+
+Run the following command according to your version
+
+python scripts/retrain.py --output_graph=tf_files/retrained_graph.pb --output_labels=tf_files/retrained_labels.txt --image_dir=tf_files/flower_photos
+
+python3 scripts/retrain.py --output_graph=tf_files/retrained_graph.pb --output_labels=tf_files/retrained_labels.txt --image_dir=tf_files/flower_photos
+
+It will around 4000 steps and you can also configure this step from retrain.py
+
+
+## Test the newly model
+
+python3 scripts/label_image.py --image xyz.jpg
+
+python scripts/label_image.py --image xyz.jpg
+
+If you see the result you're successfull
+
+
