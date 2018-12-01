@@ -46,4 +46,54 @@ python scripts/label_image.py --image xyz.jpg
 
 If you see the result you're successfull
 
+### On Android mobile 
 
+You have already `tf_files/retrained_graph.pb` and `tf_files/retrained_labels.txt` which is retrained model graph and text file containing labels.
+
+### Creating an Optimized model
+
+python -m tensorflow.python.tools.optimize_for_inference \
+  --input=tf_files/retrained_graph.pb \
+  --output=tf_files/optimized_graph.pb \
+  --input_names="Mul" \
+  --output_names="final_result"
+
+python3 -m tensorflow.python.tools.optimize_for_inference \
+  --input=tf_files/retrained_graph.pb \
+  --output=tf_files/optimized_graph.pb \
+  --input_names="Mul" \
+  --output_names="final_result"
+
+According to your version 2 & 3
+
+Now lets just optimize and quantize the graph
+
+python -m scripts.quantize_graph \
+  --input=tf_files/optimized_graph.pb \
+  --output=tf_files/rounded_graph.pb \
+  --output_node_names=final_result \
+  --mode=weights_rounded
+
+python3 -m scripts.quantize_graph \
+  --input=tf_files/optimized_graph.pb \
+  --output=tf_files/rounded_graph.pb \
+  --output_node_names=final_result \
+  --mode=weights_rounded
+
+Setup the android studio and build the gradle which is already setup in `android/tfmobile` folder.
+
+Now you need to add your models to project
+
+Run the following command to copy and rename the file or you can just skip and copy paste the final and rename it manually.
+
+cp tf_files/rounded_graph.pb android/tfmobile/assets/graph.pb
+cp tf_files/retrained_labels.txt android/tfmobile/assets/labels.txt
+
+That's it you made it end
+Now build the apk and enjoy...
+
+
+## Attention features
+
+* More neural networks
+* Model name and also finding axel of model
